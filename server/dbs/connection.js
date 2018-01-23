@@ -8,8 +8,8 @@ var connection = mysql.createConnection(
     {
         host: 'localhost',
         user: 'root',
-        password: "",
-        database: '',//数据库名称
+        password: "zxwzxwzxw",
+        database: 'TTMS',//数据库名称
         port: 3306
     });
 connection.connect((err)=> {
