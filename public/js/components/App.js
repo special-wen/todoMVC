@@ -3,6 +3,8 @@
  */
 import React from 'react'
 import ReactDOM from 'react-dom';
+import TodoHeader from './TodoHeader' //引入组件
+import TodoMain from './TodoMain'
 class App extends React.Component{
     constructor(){
         super();
@@ -11,34 +13,22 @@ class App extends React.Component{
             todos:[]
         }
     }
-    //绑定键盘回车事件，添加新任务
-    handlerKeyUp(e){
-        if (e.keyCode == 13){
-            let value = e.target.value;
-            if(!value)
-                return false;
-            let newTodoItem = {
-                text:value,
-                isDone:false
-            };
-            e.target.value = '';
-            this.state.todos.push(newTodoItem)
-            //修改状态值，每次修改以后，自动调用this,render方法，在此渲染
-            this.setState({todos:this.state.todos});
-        }
+    //添加todo事项的方法
+    addTodo(item){
+        this.state.todos.push(item)
+        this.setState({todos:this.state.todos}); //设置状态
     }
+
     render(){
         return(
-            <div className="todo-input">
-                <input type="text" placeholder="请输入待办事项" onKeyUp={this.handlerKeyUp.bind(this)}/>
-                <ul>
-                    {this.state.todos.map((todo,index)=>{{
-                        return(
-                            <li key={index}>{todo.text}</li>
-                        )
-                    }})}
-                </ul>
+            <div className="todo-wapper">
+                {/*//将原内容写在组件中并引入进行渲染*/}
+                {/*//把addTodo方法传递到TodoHeader组件中，bind(this)是为了把该react实例绑定在this上*/}
+                <TodoHeader addTodo={this.addTodo.bind(this)}/>
+                {/*//把state.todos传入到todoMain中*/}
+                <TodoMain todos={this.state.todos}/>
             </div>
+
         )
     }
 }
